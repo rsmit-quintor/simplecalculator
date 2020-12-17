@@ -1,5 +1,6 @@
 package nl.ruben.simplecalculator.service;
 
+import nl.ruben.simplecalculator.dto.CalculationDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorServiceTest {
 
     private CalculatorService calculatorService = new CalculatorService();
+
     @BeforeEach
     void setUp() {
     }
@@ -19,25 +21,37 @@ class CalculatorServiceTest {
 
     @Test
     void add() {
-        double result = calculatorService.add(999, 4);
+        CalculationDto dto = new CalculationDto();
+        dto.setLeft(999);
+        dto.setRight(4);
+        double result = calculatorService.add(dto);
         assertEquals(1003, result);
     }
 
     @Test
     void subtract() {
-        double result = calculatorService.subtract(10005, 8);
+        CalculationDto dto = new CalculationDto();
+        dto.setLeft(10005);
+        dto.setRight(8);
+        double result = calculatorService.subtract(dto);
         assertEquals(9997, result);
     }
 
     @Test
     void multiply() {
-        double result = calculatorService.multiply(619, 971);
+        CalculationDto dto = new CalculationDto();
+        dto.setLeft(619);
+        dto.setRight(971);
+        double result = calculatorService.multiply(dto);
         assertEquals(601049, result);
     }
 
     @Test
     void divide() {
-        double result = calculatorService.divide(999, 4);
+        CalculationDto dto = new CalculationDto();
+        dto.setLeft(999);
+        dto.setRight(4);
+        double result = calculatorService.divide(dto);
         assertEquals(249.75, result);
     }
 }
