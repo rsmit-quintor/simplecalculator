@@ -4,7 +4,7 @@ import lombok.Data;
 import nl.ruben.simplecalculator.OperationType;
 
 @Data
-public abstract class CalculationDto {
+public class CalculationDto {
     private OperationType operationType;
     private int left;
     private int right;
