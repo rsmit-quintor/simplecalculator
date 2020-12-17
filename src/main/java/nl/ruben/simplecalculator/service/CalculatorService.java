@@ -6,18 +6,18 @@ import org.springframework.stereotype.Service;
 public class CalculatorService {
 
     public double add(int left, int right){
-        return 0;
+        return left + right;
     }
 
     public double subtract(int left, int right){
-        return 0;
+        return left - right;
     }
 
     public double multiply(int left, int right){
-        return 0;
+        return left * right;
     }
 
     public double divide(int left, int right){
-        return 0;
+        return (double)left / right;
     }
 }

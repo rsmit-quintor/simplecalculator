@@ -37,7 +37,7 @@ class CalculatorServiceTest {
 
     @Test
     void divide() {
-        double result = calculatorService.add(999, 4);
+        double result = calculatorService.divide(999, 4);
         assertEquals(249.75, result);
     }
 }
