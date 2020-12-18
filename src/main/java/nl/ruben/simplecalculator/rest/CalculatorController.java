@@ -1,6 +1,7 @@
 package nl.ruben.simplecalculator.rest;
 
 import lombok.RequiredArgsConstructor;
+import nl.ruben.simplecalculator.dto.AnswerDto;
 import nl.ruben.simplecalculator.dto.CalculationDto;
 import nl.ruben.simplecalculator.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/calculate")
@@ -16,6 +18,13 @@ public class CalculatorController {
 
     @Autowired
     public final CalculatorService calculatorService;
+
+    @CrossOrigin
+    @PostMapping("/calculate")
+    public ResponseEntity<List<AnswerDto>> calculate(@RequestBody @Valid List<CalculationDto> dtoList) {
+        List<AnswerDto> result = calculatorService.calculate(dtoList);
+        return ResponseEntity.ok(result);
+    }
 
     @CrossOrigin
     @PostMapping("/add")

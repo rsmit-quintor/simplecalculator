@@ -6,6 +6,6 @@ import nl.ruben.simplecalculator.OperationType;
 @Data
 public class CalculationDto {
     private OperationType operationType;
-    private int left;
-    private int right;
+    private Integer left;
+    private Integer right;
 }

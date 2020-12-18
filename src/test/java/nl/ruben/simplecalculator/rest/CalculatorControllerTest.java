@@ -1,5 +1,6 @@
 package nl.ruben.simplecalculator.rest;
 
+import nl.ruben.simplecalculator.dto.AnswerDto;
 import nl.ruben.simplecalculator.dto.CalculationDto;
 import nl.ruben.simplecalculator.service.CalculatorService;
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +14,12 @@ import org.springframework.http.ResponseEntity;
 
 import javax.validation.constraints.NotNull;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +35,26 @@ class CalculatorControllerTest {
 
     @AfterEach
     void tearDown() {
+    }
+
+    @Test
+    void calculate() {
+        AnswerDto answerDto = new AnswerDto();
+        CalculationDto dto = new CalculationDto();
+        dto.setLeft(999);
+        dto.setRight(4);
+        answerDto.setCalculationDto(dto);
+        answerDto.setOutcome(9999.9999);
+        List<AnswerDto> answerDtoList = Collections.singletonList(answerDto);
+        Mockito.lenient()
+                .when(calculatorService.calculate(anyList()))
+                .thenReturn(answerDtoList);
+
+        List<CalculationDto> input = Collections.singletonList(dto);
+        ResponseEntity<List<AnswerDto>> result = calculatorController.calculate(input);
+        verify(calculatorService).calculate(input);
+        assertTrue(result.getStatusCode().is2xxSuccessful());
+        assertEquals(answerDtoList, result.getBody());
     }
 
     @Test
