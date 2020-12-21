@@ -1,8 +1,10 @@
 package nl.ruben.simplecalculator.service;
 
-import nl.ruben.simplecalculator.dto.AnswerDto;
+import lombok.RequiredArgsConstructor;
 import nl.ruben.simplecalculator.dto.CalculationDto;
 import nl.ruben.simplecalculator.model.Calculation;
+import nl.ruben.simplecalculator.repository.CalculationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,18 +12,21 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CalculatorService {
 
-    public List<AnswerDto> calculate(List<CalculationDto> dtoList) {
-        Function<CalculationDto, AnswerDto> createAnswerDto = (CalculationDto dto) -> {
-            AnswerDto answerDto = new AnswerDto();
-            Double outcome = new Calculation(dto.getLeft(), dto.getRight(), dto.getOperationType())
-                    .calculateOutcome();
-            answerDto.setOutcome(outcome);
-            answerDto.setCalculationDto(dto);
-            return answerDto;
+    @Autowired
+    private final CalculationRepository calculationRepository;
+
+    public List<CalculationDto> calculate(List<CalculationDto> dtoList) {
+        Function<CalculationDto, CalculationDto> calculateAndSave = (CalculationDto dto) -> {
+            Calculation calculation = new Calculation(dto.getLeft(), dto.getRight(), dto.getOperation());
+            Double outcome = calculation.calculateOutcome();
+            calculationRepository.save(calculation);
+            dto.setOutcome(outcome);
+            return dto;
         };
-        return dtoList.stream().map(createAnswerDto).collect(Collectors.toList());
+        return dtoList.stream().map(calculateAndSave).collect(Collectors.toList());
     }
 
     public double add(CalculationDto dto){

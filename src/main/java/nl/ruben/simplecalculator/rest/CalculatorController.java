@@ -1,7 +1,6 @@
 package nl.ruben.simplecalculator.rest;
 
 import lombok.RequiredArgsConstructor;
-import nl.ruben.simplecalculator.dto.AnswerDto;
 import nl.ruben.simplecalculator.dto.CalculationDto;
 import nl.ruben.simplecalculator.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,12 @@ import java.util.List;
 public class CalculatorController {
 
     @Autowired
-    public final CalculatorService calculatorService;
+    private final CalculatorService calculatorService;
 
     @CrossOrigin
-    @PostMapping("/calculate")
-    public ResponseEntity<List<AnswerDto>> calculate(@RequestBody @Valid List<CalculationDto> dtoList) {
-        List<AnswerDto> result = calculatorService.calculate(dtoList);
+    @PostMapping("")
+    public ResponseEntity<List<CalculationDto>> calculate(@RequestBody @Valid List<CalculationDto> dtoList) {
+        List<CalculationDto> result = calculatorService.calculate(dtoList);
         return ResponseEntity.ok(result);
     }
 

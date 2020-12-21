@@ -5,7 +5,8 @@ import nl.ruben.simplecalculator.OperationType;
 
 @Data
 public class CalculationDto {
-    private OperationType operationType;
+    private OperationType operation;
     private Integer left;
     private Integer right;
+    private Double outcome;
 }

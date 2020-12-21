@@ -1,6 +1,6 @@
 package nl.ruben.simplecalculator.rest;
 
-import nl.ruben.simplecalculator.dto.AnswerDto;
+import nl.ruben.simplecalculator.OperationType;
 import nl.ruben.simplecalculator.dto.CalculationDto;
 import nl.ruben.simplecalculator.service.CalculatorService;
 import org.junit.jupiter.api.AfterEach;
@@ -11,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-
-import javax.validation.constraints.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,22 +37,21 @@ class CalculatorControllerTest {
 
     @Test
     void calculate() {
-        AnswerDto answerDto = new AnswerDto();
-        CalculationDto dto = new CalculationDto();
-        dto.setLeft(999);
-        dto.setRight(4);
-        answerDto.setCalculationDto(dto);
-        answerDto.setOutcome(9999.9999);
-        List<AnswerDto> answerDtoList = Collections.singletonList(answerDto);
+        CalculationDto calculationDto = new CalculationDto();
+        calculationDto.setLeft(999);
+        calculationDto.setRight(4);
+        calculationDto.setOperation(OperationType.ADD);
+        calculationDto.setOutcome(9999.9999);
+        List<CalculationDto> calculationDtoList = Collections.singletonList(calculationDto);
         Mockito.lenient()
                 .when(calculatorService.calculate(anyList()))
-                .thenReturn(answerDtoList);
+                .thenReturn(calculationDtoList);
 
-        List<CalculationDto> input = Collections.singletonList(dto);
-        ResponseEntity<List<AnswerDto>> result = calculatorController.calculate(input);
+        List<CalculationDto> input = Collections.singletonList(calculationDto);
+        ResponseEntity<List<CalculationDto>> result = calculatorController.calculate(input);
         verify(calculatorService).calculate(input);
         assertTrue(result.getStatusCode().is2xxSuccessful());
-        assertEquals(answerDtoList, result.getBody());
+        assertEquals(calculationDtoList, result.getBody());
     }
 
     @Test

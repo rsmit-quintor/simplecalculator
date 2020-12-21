@@ -1,22 +1,54 @@
 package nl.ruben.simplecalculator.service;
 
+import nl.ruben.simplecalculator.OperationType;
 import nl.ruben.simplecalculator.dto.CalculationDto;
+import nl.ruben.simplecalculator.model.Calculation;
+import nl.ruben.simplecalculator.repository.CalculationRepository;
+import nl.ruben.simplecalculator.rest.HistoryController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class CalculatorServiceTest {
 
-    private CalculatorService calculatorService = new CalculatorService();
+    private CalculationRepository calculationRepository;
+    private CalculatorService calculatorService;
 
     @BeforeEach
-    void setUp() {
+    void setUp(@Mock CalculationRepository calculationRepository) {
+        this.calculatorService = new CalculatorService(calculationRepository);
+        this.calculationRepository = calculationRepository;
     }
 
-    @AfterEach
-    void tearDown() {
+    @Test
+    void calculate() {
+        CalculationDto calculationDto = new CalculationDto();
+        calculationDto.setLeft(999);
+        calculationDto.setRight(4);
+        calculationDto.setOperation(OperationType.ADD);
+        List<CalculationDto> calculationDtoList = Collections.singletonList(calculationDto);
+        Mockito.lenient()
+                .when(calculationRepository.save(any(Calculation.class)))
+                .thenReturn(new Calculation());
+        List<CalculationDto> result = calculatorService.calculate(calculationDtoList);
+        verify(calculationRepository).save(any(Calculation.class));
+        CalculationDto resultDto = result.get(0);
+        assertEquals(999, resultDto.getLeft());
+        assertEquals(4, resultDto.getRight());
+        assertEquals(1003, resultDto.getOutcome());
+        assertEquals(OperationType.ADD, resultDto.getOperation());
     }
 
     @Test
