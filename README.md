@@ -14,6 +14,7 @@ Make sure to change this in the backend/src/main/resources/application.propertie
 
 ## Start up
 * Run mvn spring-boot:run in the backend directory and npm start in the frontend directory.
+* Go to http://localhost:4200 to control the application.
 
 ## Testing
 * Run mvn test in the backend directory and npm test in the frontend directory.
