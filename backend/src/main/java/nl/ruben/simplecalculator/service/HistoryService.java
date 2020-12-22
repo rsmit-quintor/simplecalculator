@@ -19,6 +19,9 @@ public class HistoryService {
     @Autowired
     private final CalculationRepository calculationRepository;
 
+    /** Gets all calculations in the database
+     * @return all calculation objects in the database
+     */
     public List<CalculationDto> getAllCalculations() {
         List<CalculationDto> calculationDtoList = new ArrayList<>();
         for (Calculation calculation : (Iterable<Calculation>) calculationRepository.findAll()) {

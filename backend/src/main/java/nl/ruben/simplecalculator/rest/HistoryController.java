@@ -20,6 +20,9 @@ public class HistoryController {
     @Autowired
     private final HistoryService historyService;
 
+    /** Gets all calculations in the database
+     * @return response with the calculations from the database
+     */
     @GetMapping("")
     public ResponseEntity<List<CalculationDto>> getAllCalculations() {
        List<CalculationDto> calculationDtoList = historyService.getAllCalculations();

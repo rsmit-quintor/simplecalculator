@@ -37,6 +37,10 @@ public class Calculation {
         this.operation = operationType;
     }
 
+    /**
+     * Checks the type of operation and calculates the outcome with the object's left and right fields
+     * @return outcome field value
+     */
     public double calculateOutcome() {
         switch(operation) {
             case ADD:

@@ -18,6 +18,11 @@ public class CalculatorService {
     @Autowired
     private final CalculationRepository calculationRepository;
 
+    /**
+     * Calculates the input and saves the calculation, then it gives the calculation back with outcomes
+     * @param dtoList a list of CalculationDtos
+     * @return result of the calculation as a list
+     */
     public List<CalculationDto> calculate(List<CalculationDto> dtoList) {
         Function<CalculationDto, CalculationDto> calculateAndSave = (CalculationDto dto) -> {
             Calculation calculation = new Calculation(dto.getLeft(), dto.getRight(), dto.getOperation());

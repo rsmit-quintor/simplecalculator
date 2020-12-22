@@ -19,6 +19,11 @@ public class CalculatorController {
     @Autowired
     private final CalculatorService calculatorService;
 
+    /**
+     * Calculates the input and saves the calculation, then it gives the calculation back with outcomes
+     * @param dtoList a list of CalculationDtos
+     * @return response with the result of the calculations as a list
+     */
     @CrossOrigin
     @PostMapping("")
     public ResponseEntity<List<CalculationDto>> calculate(@RequestBody @Valid List<CalculationDto> dtoList) {
