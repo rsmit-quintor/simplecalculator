@@ -1,0 +1,19 @@
+input[type="number"] {
+  width: 40px;
+}
+
+.centered {
+  text-align: center;
+}
+
+#calculate {
+  margin-top: 5px;
+}
+
+#fillRandomly {
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+}

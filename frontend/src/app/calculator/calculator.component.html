@@ -1,1 +1,50 @@
-<p>calculator works!</p>
+<p class="centered">
+  Put in your calculations and press "Calculate" to see the result.
+</p>
+<!-- <button (click)="calculate(1, 1, operationType.Add)">Calculate 1+1</button> -->
+<div class="centered">
+  <p>
+    Number of calculations to do at once:
+    <input
+      type="number"
+      [(ngModel)]="numberOfCalculationsInForm"
+      (ngModelChange)="numberOfCalculationsInFormChanged()"
+    />
+  </p>
+</div>
+<div class="centered">
+  <input
+    type="button"
+    id="fillRandomly"
+    value="Fill randomly"
+    (click)="fillRandomly()"
+  />
+</div>
+<form [formGroup]="calculationsForm" (submit)="calculate()" class="centered">
+  <div
+    formArrayName="calculations"
+    *ngFor="
+      let group of calculationsForm.get('calculations')['controls'];
+      let i = index
+    "
+  >
+    <div formGroupName="{{ i }}">
+      <input type="number" formControlName="left" placeholder="0" />
+      <select formControlName="operation">
+        <option [ngValue]="operationType.Add">+</option>
+        <option [ngValue]="operationType.Subtract">-</option>
+        <option [ngValue]="operationType.Multiply">*</option>
+        <option [ngValue]="operationType.Divide">/</option>
+      </select>
+      <input type="number" formControlName="right" placeholder="0" />
+    </div>
+  </div>
+  <input type="submit" value="Calculate" id="calculate" />
+</form>
+<div class="centered">
+  <p *ngFor="let calculation of calculated">
+    {{ calculation.left }} {{ getCalculationSymbol(calculation.operation) }}
+    {{ calculation.right }} =
+    {{ calculation.outcome }}
+  </p>
+</div>
