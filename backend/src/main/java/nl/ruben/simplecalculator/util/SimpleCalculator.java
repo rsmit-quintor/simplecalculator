@@ -37,6 +37,10 @@ public final class SimpleCalculator {
      * @return outcome as a double value
      */
     public static double divide(int left, int right){
+        double output = (double)left/right;
+        if (output == Double.POSITIVE_INFINITY) {
+            throw new ArithmeticException("Cannot divide by 0");
+        }
         return (double)left / right;
     }
 }

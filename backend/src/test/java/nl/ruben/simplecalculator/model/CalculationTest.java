@@ -29,4 +29,10 @@ class CalculationTest {
         assertEquals(0.7647058823529411, outcome);
         assertEquals(0.7647058823529411, calculation.getOutcome());
     }
+
+    @Test
+    void calculateOutcome_DivideByZero(){
+        Calculation calculation = new Calculation(1, 0, OperationType.DIVIDE);
+        assertThrows(ArithmeticException.class, calculation::calculateOutcome);
+    }
 }

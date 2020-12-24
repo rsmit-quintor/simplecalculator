@@ -29,4 +29,9 @@ class SimpleCalculatorTest {
         Double result = SimpleCalculator.divide(10, 4);
         assertEquals(2.5, result);
     }
+
+    @Test
+    void divide_DivideByZero() {
+        assertThrows(ArithmeticException.class, () -> SimpleCalculator.divide(1, 0));
+    }
 }

@@ -55,6 +55,22 @@ class CalculatorControllerTest {
     }
 
     @Test
+    void calculate_DivideByZero() {
+        Mockito.lenient()
+                .when(calculatorService.calculate(anyList()))
+                .thenThrow(ArithmeticException.class);
+
+        CalculationDto calculationDto = new CalculationDto();
+        calculationDto.setLeft(1);
+        calculationDto.setRight(0);
+        calculationDto.setOperation(OperationType.DIVIDE);
+
+        assertThrows(ArithmeticException.class, () -> {
+            calculatorController.calculate(Collections.singletonList(calculationDto));
+        });
+    }
+
+    @Test
     void add() {
         Mockito.lenient()
                 .when(calculatorService.add(any(CalculationDto.class)))

@@ -52,6 +52,17 @@ class CalculatorServiceTest {
     }
 
     @Test
+    void calculate_divideByZero() {
+        CalculationDto calculationDto = new CalculationDto();
+        calculationDto.setLeft(1);
+        calculationDto.setRight(0);
+        calculationDto.setOperation(OperationType.DIVIDE);
+        assertThrows(ArithmeticException.class, () -> {
+            calculatorService.calculate(Collections.singletonList(calculationDto));
+        });
+    }
+
+    @Test
     void add() {
         CalculationDto dto = new CalculationDto();
         dto.setLeft(999);
